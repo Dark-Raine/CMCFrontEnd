@@ -1,25 +1,42 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import ReactMap, { Layer, Feature } from 'react-mapbox-gl';
 import './App.css';
+import Nav from './components/nav'
+
+const accessToken = "pk.eyJ1IjoiYWF0YmMiLCJhIjoiY2p0ZWVzN2FhMTN1eTRibzc1MXBldnU0ciJ9.ZXzgcKbL9Jrymc0UlMw-Uw";
+const style = "mapbox://styles/mapbox/streets-v9";
+
+const Map = ReactMap({
+  accessToken
+});
+
+const mapStyle = {
+  height: '100vh',
+  width: '100vw'
+};
+
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+      <Nav />
+      {/* <Map
+        className="app-map"
+        style={style}
+        containerStyle={mapStyle}
+        center={[-0.087587,51.5195]}
+        zoom={[15]}
+      >
+      <Layer
+      type="symbol"
+      id="marker"
+      // paint={{"circle-radius": 10}}
+      layout={{ "icon-image": "marker-15" }}>
+      <Feature coordinates={[-0.1275,51.50722]}/>
+    </Layer>
+    </Map> */}
       </div>
     );
   }
