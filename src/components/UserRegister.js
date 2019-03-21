@@ -23,8 +23,8 @@ export default class UserRegister extends React.Component {
             // this.props.signin(data)
             localStorage.setItem("token", data.token);
             // console.log(data)
-            // this.props.history.push("/app")
-            alert('Registered!')
+            this.props.history.push("/app")
+            // alert('Registered!')
           }
         })
       }
