@@ -34,6 +34,16 @@ export default class API{
             }
         }).then(resp => resp.json())
     }
+
+    static search(term){
+        return fetch('http://localhost:3000/childminders/search', {
+	        method: 'POST',
+	        headers:{
+                "Content-Type":"application/json"
+            },
+	        body: JSON.stringify({search: "Wimbledon"})
+        }).then(resp => resp.json())
+    }
 }
 
 window.API = API

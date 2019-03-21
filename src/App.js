@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ReactMap, { Layer, Feature } from 'react-mapbox-gl';
 import './App.css';
 import Nav from './components/nav'
+import FilterMinders from './components/filterMinders'
+import API from './API'
+import { withRouter } from "react-router-dom";
 
 const accessToken = "pk.eyJ1IjoiYWF0YmMiLCJhIjoiY2p0ZWVzN2FhMTN1eTRibzc1MXBldnU0ciJ9.ZXzgcKbL9Jrymc0UlMw-Uw";
 const style = "mapbox://styles/mapbox/streets-v9";
@@ -17,11 +20,30 @@ const mapStyle = {
 
 
 
+
+
 class App extends Component {
+  state = {
+    username: null
+  }
+
+  componentDidMount(){
+    API.validate("users").then(data => {
+      if (data.error) {
+        this.props.history.push("/")
+      } else {
+        localStorage.setItem('token', data.token)
+        this.setState({username: data.username})
+      }
+    })
+  }
+
+
   render() {
     return (
       <div>
       <Nav />
+      <FilterMinders currentUser={this.state.username}/>
       {/* <Map
         className="app-map"
         style={style}
