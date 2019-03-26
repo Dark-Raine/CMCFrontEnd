@@ -6,7 +6,9 @@ import API from '../API'
 export default class UserRegister extends React.Component {
     state = {
         username: "",
-        password: ""
+        password: "",
+        name: "",
+        surname: ""
     }
 
     handleOnChange = (event) => {
@@ -39,6 +41,8 @@ export default class UserRegister extends React.Component {
                 </div>
                 <form className="UserSignIn-content UserSignIn-form">
                     <input type="text" name="username" placeholder="username" className="input-style" onChange={this.handleOnChange}/>
+                    <input type="text" name="name" placeholder="name" className="input-style" onChange={this.handleOnChange}/>
+                    <input type="text" name="surname" placeholder="surname" className="input-style" onChange={this.handleOnChange}/>
                     <input type="password" name="password" placeholder="password" className="input-style" onChange={this.handleOnChange}/>
                     <button type="submit" onClick={(event) => this.handleSubmit(event)}>Register and Log in</button>
                 </form>

@@ -23,11 +23,9 @@ export default class UserSignIn extends React.Component {
                     <h1>CMC</h1>
                     <h2>Child Minders Care</h2>
                 </div>
-                <div>
-                    <Link to="/usersignin">User Login</Link>
-                    <Link to="/mindersignin">Childminder Login</Link>
-                    Or
-                    <Link to="/register">Register</Link>
+                <div className="UserSignIn-buttons-container">
+                    <Link className="UserSignIn-buttons" to="/usersignin">User Login</Link>
+                    <Link className="UserSignIn-buttons" to="/registeruser">Register</Link>
                 </div>
             </section>
         )

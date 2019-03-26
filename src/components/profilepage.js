@@ -1,14 +1,19 @@
 import React from 'react'
 import { isAbsolute } from 'path';
 import { Link } from "react-router-dom";
+import StarRatings from 'react-star-ratings'
+
 
 
 
 export default class ProfilePage extends React.Component {
 
     state = {
-        clicked: false,
-        review: null
+        createClicked: false,
+        review: null,
+        toEdit: null,
+        toDelete: null,
+        rating: 0
     }
 
     handleSubmit = (event) => {
@@ -21,7 +26,11 @@ export default class ProfilePage extends React.Component {
     }
 
     toggleReviewBox = () => {
-        this.setState({clicked: !this.state.clicked})
+        this.setState({createClicked: !this.state.createClicked})
+    }
+
+    toggleEditBox = () => {
+        this.setState({toEdit: null})
     }
 
     submitReview = () => {
@@ -31,7 +40,7 @@ export default class ProfilePage extends React.Component {
                 "Content-Type":"application/json",
                 "Authorization": localStorage.getItem("token")
             },
-            body: JSON.stringify({content: this.state.review, id: this.props.minder.data.id})
+            body: JSON.stringify({content: this.state.review, id: this.props.minder.data.id, rating: this.state.rating})
         }).then(resp => resp.json())
         .then(response => {
             if (response.message) {
@@ -44,7 +53,89 @@ export default class ProfilePage extends React.Component {
 
     }
 
+    submitEditedReview = (id = this.state.toEdit, content = this.state.review) => {
+        fetch(`http://localhost:3000/reviews/${id}`,{
+            method: 'PATCH',
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": localStorage.getItem("token")
+            },
+            body: JSON.stringify({content, id})
+        }).then(resp => resp.json())
+        .then(response => {
+            if (response.message) {
+                this.props.updateState()
+                this.toggleEditBox()
+            } else {
+                alert('Something went wrong X_x')
+            }
+        })
 
+    }
+
+    editReview = (id,content) => 
+        this.setState({toEdit: id, review: content})
+
+    deleteReview = (id) => {
+        fetch(`http://localhost:3000/reviews/${id}`,{
+            method: 'DELETE',
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(resp => resp.json())
+        .then(response => {
+            if (response.message) {
+                this.props.updateState()
+            } else {
+                alert('Something went wrong X_x')
+            }
+        })
+    }
+
+    changeRating = (newRating) => {
+        this.setState({
+          rating: newRating
+        });
+      }
+
+      likeReview = (reviewID) => {
+        fetch(`http://localhost:3000/likes/`,{
+            method: 'POST',
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": localStorage.getItem("token")
+            },
+            body: JSON.stringify({review_id: reviewID})
+        }).then(resp => resp.json())
+        .then(response => {
+            if (response.message) {
+                this.props.updateState()
+            } else {
+                alert('Something went wrong X_x')
+            }
+        })
+      }
+
+      dislikeReview = (reviewID) => {
+        const like = this.props.minder.data.reviews
+            .find(review => review.id === reviewID)
+            .likedby.find(like => like.username === this.props.currentUser)
+        fetch(`http://localhost:3000/likes/${like.id}`,{
+            method: 'DELETE',
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(resp => resp.json())
+        .then(response => {
+            if (response.message) {
+                this.props.updateState()
+            } else {
+                alert('Something went wrong X_x')
+            }
+        })
+    }
  
 
 
@@ -55,14 +146,41 @@ export default class ProfilePage extends React.Component {
         const generateReviews = (reviews) => {
             return reviews.map(review => 
                 <div className="profilePage-review">
-                    <p>{review.reviewer}</p>
-                    <p>{review.content}</p>
+                {
+                    !(this.state.toEdit === review.id) ?
+                        <div>
+                            <p>{review.reviewer}</p>
+                            <p>{review.content}</p>
+                            <StarRatings
+                            rating={review.rating}
+                            starRatedColor="green"
+                            numberOfStars={5}
+                            starDimension="15px"
+                            name='rating'
+                            />
+                            <div className="review-like-container">
+                            {
+                                !review.likedby.find(liker => liker.username === currentUsr) 
+                                ?
+                                <div className="like-review" onClick={() => this.likeReview(review.id)} > ^ </div>
+                                :
+                                <div className="like-review" onClick={() => this.dislikeReview(review.id)} > ^ </div>
+                            }
+                                <p>{review.likedby.length}</p>
+                            </div>
+                        </div>
+                    :
+                        <div className="profilePage-review-add">
+                            <textarea name="review" value={this.state.review} placeholder="Write your review here..." onChange={(event) => this.handleOnChange(event)}/>
+                            <button onClick={() => this.submitEditedReview()}>Submit</button>
+                        </div>
+                }
                     <div>
                     {review.username === currentUsr ?
                         
                         <div>
-                            <button>Edit</button>
-                            <button>delete</button>
+                            <button onClick={() => this.editReview(review.id, review.content)}>Edit</button>
+                            <button onClick={() => this.deleteReview(review.id)}>delete</button>
                         </div>
                     :
                         null
@@ -78,6 +196,13 @@ export default class ProfilePage extends React.Component {
             </div>
                 <div className="profilePage-title">
                     <h1>{minder.name}</h1>
+                    <StarRatings
+                            rating={minder.averagerating}
+                            starRatedColor="green"
+                            numberOfStars={5}
+                            starDimension="20px"
+                            name='rating'
+                        />
                 </div>
                 <div className="profilePage-block">
                     <div className="profilePage-block-section">
@@ -119,9 +244,17 @@ export default class ProfilePage extends React.Component {
                     <h2>Reviews</h2>
                     {generateReviews(minder.reviews)}
                 </div>
-                {!!this.state.clicked ? 
+                {!!this.state.createClicked ? 
                     <div className="profilePage-review-add">
                         <textarea name="review" placeholder="Write your review here..." onChange={(event) => this.handleOnChange(event)}/>
+                        <StarRatings
+                            rating={this.state.rating}
+                            starRatedColor="green"
+                            changeRating={this.changeRating}
+                            numberOfStars={5}
+                            starDimension="20px"
+                            name='rating'
+                        />
                         <button onClick={() => this.submitReview()}>Submit</button>
                     </div>
                     :
@@ -136,15 +269,3 @@ export default class ProfilePage extends React.Component {
         )
     }
 }
-
-{/* <Childminder id: nil, name: nil, 
-number: nil, 
-email: nil, 
-address: nil, 
-bio: nil, 
-dayrate: nil, 
-openingtime: nil, 
-closingtime: nil, 
-daysopen: nil, 
-created_at: nil, 
-updated_at: nil, username: nil, password_digest: nil></div> */}

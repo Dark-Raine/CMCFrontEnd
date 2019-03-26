@@ -33,9 +33,7 @@ export default class UserSignIn extends React.Component {
         return(
             <section className="UserSignIn">
                 <div className="UserSignIn-content">
-                    <h1>CMC</h1>
-                    <h2>Child Minders Care</h2>
-                    <h3>User Login</h3>
+
                 </div>
                 <form className="UserSignIn-content UserSignIn-form">
                     <input type="text" name="username" placeholder="username" className="input-style" onChange={this.handleOnChange}/>

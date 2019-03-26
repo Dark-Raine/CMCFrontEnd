@@ -14,12 +14,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={SignInHandler} />
-            <Route exact path="/usersignin" component={UserSignIn} />
-            <Route exact path="/mindersignin" component={MinderSignIn} />
-            <Route exact path="/register" component={RegisterHandler} />
+            <Route exact path="/" component={UserSignIn} />
             <Route exact path="/registeruser" component={RegisterUser} />
-            <Route exact path="/registerminder" component={RegisterMinder} />
             <Route exact path="/app" component={App} />
         </Switch>
     </BrowserRouter>,
