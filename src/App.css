@@ -71,9 +71,31 @@
   border-radius: 5px;
   color: white;
   background-color: #61a54c;
-  font-size: 20px;
-  box-shadow: 0px 0px 35px black;
-  fo
+  font-size: 16px;
+  box-shadow: 0px 1.5px 1px black;
+  border: none;
+  width: 100%;
+  text-align: center;
+}
+
+.UserSignIn-form button{
+  transition: background-color 0.35s;
+}
+
+.UserSignIn-form button:hover{
+  background-color: #78cc5f;
+}
+
+.UserSignIn-buttons{
+  width: 202px;
+  background-color: transparent;
+  border: 1px solid white;
+  transition: background-color 0.35s, border 0.35s;
+}
+
+.UserSignIn-buttons:hover{
+  background-color: #61a54c;
+  border: 1px solid transparent;
 }
 
 .input-style{
@@ -90,7 +112,12 @@
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 1px solid white;
+  border-bottom: 2.5px solid white;
+  transition: border-bottom-color 0.35s;
+}
+
+.UserSignIn-form input:focus{
+  border-bottom-color: #61a54c;
 }
 
 .main-app-header {
@@ -101,41 +128,57 @@
   width: 100%;
   display: flex;
   list-style: none;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   height: 5vh;
-  /* position: fixed; */
+  position: fixed;
   z-index: 1;
-  background-color: #78cc5f;
+  /* background-color: #78cc5f; */
+  padding-right: 10px;
 }
 
 .main-nav li{
+  color: white; 
   margin: 0px 10px;
   /* background-color: black; */
+  opacity: 0.5;
+  transition: opacity 0.35s;
+}
+
+.main-nav li:hover{
+  opacity: 1;
 }
 
 .result-holder{
   display: flex;
-  width: 100%;
-  justify-content: center;
+  /* width: 100%; */
+  /* justify-content: center; */
+  /* align-items: center; */
   /* flex-direction: column; */
   flex-wrap: wrap;
   margin-top: 50px;
+  height: 100vh;
 }
 
 .result-card{
-  border: solid white;
+  display: flex;
+  flex-direction: column;
+  /* border: solid transparent; */
   width: 25%;
   border-radius: 5px;
   /* padding: 0 15px; */
-  box-shadow: 0px 0px 25px black;
+  box-shadow: 0px 3px 5px black;
   margin: 15px;
+  height: 30%;
+  cursor: pointer;
 }
 
 .result-card-header{
   text-align: center;
-  background-color: #78cc5f;
+  background-color: white;
   background-size: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .result-card-header h1{
@@ -144,12 +187,24 @@
 
 .result-card-body{
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  background-color: #61a54c;
-  border-top: solid white 1px;;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  /* border-top: solid white 1px; */
+  margin-top: 2.5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  /* padding: 5px; */
+  height: 100%;
+  /* box-shadow: 0px 0px 25px black; */
+  
 }
 
+.result-card-body h3{
+  margin: 0;
+}
 .nav-item{
   cursor: pointer;
 }
@@ -159,9 +214,10 @@
   flex-direction: column;
   width: 50%;
   align-items: center;
-  border: solid black;
+  /* border: solid black; */
   padding: 10px;
   margin-top: 50px;
+  
 }
 
 .profilePage-block, .profilepage-block-container{
@@ -172,16 +228,27 @@
 
 .profilePage-block {
   border-bottom: solid black 1px;
+  background-color: white;
 }
 
 .profilepage-block-container{
   width: 670px;
 }
 
+@keyframes bgAnim { 
+  0%{background-position:31% 0%}
+  50%{background-position:70% 100%}
+  100%{background-position:31% 0%}
+}
+
 .container{
   width: 100%;
   display: flex;
   justify-content: center;
+  background: linear-gradient(2deg, #61a54c, #020302);
+  background-size: 400% 400%;
+  animation: bgAnim 30s ease infinite;
+  /* height: 100vh; */
 }
 
 .profilePage-block-section, .profilePage-reviews{
@@ -198,6 +265,12 @@
   text-align: center;
   border-top: solid black 1px;
   display: flex;
+}
+
+.profilePage-reviews{
+  margin-top: 10px;
+  /* background-color: lightgray; */
+  width: 100%;
 }
 
 .profilePage-container-backBtn {
@@ -218,10 +291,49 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width:  100%;
+  /* width:  100%; */
 }
 
 .review-like-container p{
   padding: 0;
   margin: 0;
+}
+
+.profilePage-title{
+  text-align: center;
+  margin-bottom: 5px;
+  /* padding: 10px 0; */
+  background-color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.st-rating{
+  box-shadow: 0px 0px 25px black;
+}
+
+.profilePage-review{
+  margin-top: 10px;
+  background-color: white;
+  /* display: flex; */
+
+}
+.review-content{
+  display: flex;
+  justify-content: stretch;
+  width: 100%;
+}
+
+.review-content-content{
+  /* display: flex; */
+  width: 100%;
+}
+
+.ratings-review{
+  width: 150px;
+  display: flex;
+}
+
+.star-ratings{
+  width: 300px;
 }

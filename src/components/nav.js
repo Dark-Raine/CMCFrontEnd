@@ -19,8 +19,8 @@ import { withRouter } from "react-router-dom";
         return(
             <header className="main-app-header">
             <nav className="main-nav">
-                    <li className="nav-item">Profile</li>
-                    <li className="nav-item" onClick={this.search}>Search</li>
+                    {/* <li className="nav-item">Profile</li> */}
+                    {/* <li className="nav-item" onClick={this.search}>Search</li> */}
                     <li className="nav-item" onClick={this.logout}>Logout</li>
             </nav>
 

@@ -47,7 +47,13 @@ export default class FilterMinders extends React.Component {
                 
                     {this.state.results ? 
                         this.state.showing ? 
-                            <ProfilePage minder={this.referenceToMinder()} updateState={this.updateMinders} returnToResults={this.goBack} currentUser={this.props.currentUser}/>:<div className="result-holder">{this.generateResults(this.state.results)}</div> 
+                            <ProfilePage 
+                            minder={this.referenceToMinder()} 
+                            updateState={this.updateMinders} 
+                            returnToResults={this.goBack} 
+                            currentUser={this.props.currentUser}/>
+                            :
+                            <div className="result-holder">{this.generateResults(this.state.results)}</div> 
                         
                         : null}
                 {/* <div className="">

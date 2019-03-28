@@ -148,25 +148,35 @@ export default class ProfilePage extends React.Component {
                 <div className="profilePage-review">
                 {
                     !(this.state.toEdit === review.id) ?
-                        <div>
-                            <p>{review.reviewer}</p>
-                            <p>{review.content}</p>
-                            <StarRatings
-                            rating={review.rating}
-                            starRatedColor="green"
-                            numberOfStars={5}
-                            starDimension="15px"
-                            name='rating'
-                            />
+                        <div className="review-content">
+                            <div className="review-content-reviewer">
+                                <p>Review By</p>
+                                <p>{review.reviewer}</p>
+                            </div>
+                            <div className="ratings-review">
+                                <p>Rating</p>
+                                <StarRatings
+                                rating={review.rating}
+                                starRatedColor="green"
+                                numberOfStars={5}
+                                starDimension="15px"
+                                name='rating'
+                                className="review-stars"
+                                />
+                            </div>
                             <div className="review-like-container">
+                            <p>{review.likedby.length}</p>
                             {
                                 !review.likedby.find(liker => liker.username === currentUsr) 
                                 ?
-                                <div className="like-review" onClick={() => this.likeReview(review.id)} > ^ </div>
+                                <div className="like-review" onClick={() => this.likeReview(review.id)} > 👍🏼 </div>
                                 :
-                                <div className="like-review" onClick={() => this.dislikeReview(review.id)} > ^ </div>
+                                <div className="like-review" onClick={() => this.dislikeReview(review.id)} > 👍🏼 </div>
                             }
-                                <p>{review.likedby.length}</p>
+                            </div>
+                            <div className="review-content-content">
+                                <p>Content</p>
+                                <p>{review.content}</p>
                             </div>
                         </div>
                     :
@@ -191,17 +201,20 @@ export default class ProfilePage extends React.Component {
         }
         return(
             <div className="profilePage">
+            <div className="profile-container">
             <div className="profilePage-pic">
-                <img src="" alt="profile picture"/>
+                {/* <img src="" alt="profile picture"/> */}
             </div>
                 <div className="profilePage-title">
                     <h1>{minder.name}</h1>
                     <StarRatings
                             rating={minder.averagerating}
                             starRatedColor="green"
+                            starEmptyColor="black"
                             numberOfStars={5}
                             starDimension="20px"
                             name='rating'
+                            className="st-rating"
                         />
                 </div>
                 <div className="profilePage-block">
@@ -240,10 +253,10 @@ export default class ProfilePage extends React.Component {
                         </div>
                     </div>
                 </div>
+                </div>
                 <div className="profilePage-reviews">
                     <h2>Reviews</h2>
                     {generateReviews(minder.reviews)}
-                </div>
                 {!!this.state.createClicked ? 
                     <div className="profilePage-review-add">
                         <textarea name="review" placeholder="Write your review here..." onChange={(event) => this.handleOnChange(event)}/>
@@ -254,12 +267,13 @@ export default class ProfilePage extends React.Component {
                             numberOfStars={5}
                             starDimension="20px"
                             name='rating'
-                        />
+                            />
                         <button onClick={() => this.submitReview()}>Submit</button>
                     </div>
                     :
                     <button onClick={() => this.toggleReviewBox()}>Add Review</button>
                 }
+                </div>
                 <div className="profilePage-container">
                     <button onClick={() => this.props.returnToResults()} className="profilePage-container-backBtn">
                         Back to all childminders

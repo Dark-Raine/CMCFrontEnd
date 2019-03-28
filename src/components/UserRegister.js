@@ -31,6 +31,17 @@ export default class UserRegister extends React.Component {
         })
       }
 
+    //   componentDidMount(){
+    //     API.validate("users").then(data => {
+    //       if (data.error) {
+    //         this.props.history.push("/")
+    //     } else {
+    //         localStorage.setItem('token', data.token)
+    //         this.props.history.push("/app")
+    //       }
+    //     })
+    //   }
+
     render () {
         return(
             <section className="UserSignIn">

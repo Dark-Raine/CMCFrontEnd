@@ -27,25 +27,15 @@ export default class SearchCard extends React.Component {
                     <h1>{minder.name}</h1>
                 </div>
                 <div className="result-card-body">
-                    <p> Open from: {minder.openingtime} </p>
-                    <p> Open till: {minder.closingtime} </p>
-                    <p> Days open: {minder.daysopen} </p>
-                    <p> Cost per day: £{minder.dayrate} </p>
+                    <h3>Availability</h3>
+                    <p> {minder.daysopen} </p>
+                    <h3> Opening time </h3>
+                    <p> {minder.openingtime} - {minder.closingtime}</p>
+                    <h3> Cost p/d </h3>
+                    <p> £{minder.dayrate} </p>
                 </div>
 
             </div>
         )
     }
 }
-
-{/* <Childminder id: nil, name: nil, 
-number: nil, 
-email: nil, 
-address: nil, 
-bio: nil, 
-dayrate: nil, 
-openingtime: nil, 
-closingtime: nil, 
-daysopen: nil, 
-created_at: nil, 
-updated_at: nil, username: nil, password_digest: nil></div> */}

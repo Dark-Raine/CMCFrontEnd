@@ -41,7 +41,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-page">
       <Nav />
       <FilterMinders currentUser={this.state.username}/>
       {/* <Map

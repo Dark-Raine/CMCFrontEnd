@@ -29,6 +29,17 @@ export default class UserSignIn extends React.Component {
         })
       }
 
+      componentDidMount(){
+        API.validate("users").then(data => {
+          if (data.error) {
+            this.props.history.push("/")
+        } else {
+            localStorage.setItem('token', data.token)
+            this.props.history.push("/app")
+          }
+        })
+      }
+
     render () {
         return(
             <section className="UserSignIn">
@@ -38,7 +49,8 @@ export default class UserSignIn extends React.Component {
                 <form className="UserSignIn-content UserSignIn-form">
                     <input type="text" name="username" placeholder="username" className="input-style" onChange={this.handleOnChange}/>
                     <input type="password" name="password" placeholder="password" className="input-style" onChange={this.handleOnChange}/>
-                    <button type="submit" onClick={(event) => this.handleSubmit(event)}>Log in</button>
+                    <button type="submit" onClick={(event) => this.handleSubmit(event)}>Login</button>
+                    <Link className="UserSignIn-buttons" to="/registeruser">Register</Link>
                 </form>
             </section>
         )
